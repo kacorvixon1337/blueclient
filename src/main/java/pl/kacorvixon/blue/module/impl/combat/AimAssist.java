@@ -35,6 +35,40 @@ public class AimAssist extends Module {
     public static BooleanProperty aimlock = new BooleanProperty("Aim lock", false);
     //public static BooleanProperty add_smoothnes = new BooleanProperty("Add smoothnes", false);
 
+
+
+
+
+    /*
+
+    //OK SO BASICALLY I JSUT SKIDDED IT TEMPORARILY CUZ I CANT GET THIS SHIT TO WORK
+    //IL ITERALLY TRIED EVERYTHING BUT THE AIMASSIST JUST KEEP GLITCHING U CAN MAKE PR OR I WILL JUS TRECODE IT LATER
+    //I WANT TO RELEASE IT ASAP SO DONT HATE OK OK OK?
+
+    //OK SO BASICALLY I JSUT SKIDDED IT TEMPORARILY CUZ I CANT GET THIS SHIT TO WORK
+    //IL ITERALLY TRIED EVERYTHING BUT THE AIMASSIST JUST KEEP GLITCHING U CAN MAKE PR OR I WILL JUS TRECODE IT LATER
+    //I WANT TO RELEASE IT ASAP SO DONT HATE OK OK OK?
+
+
+    //OK SO BASICALLY I JSUT SKIDDED IT TEMPORARILY CUZ I CANT GET THIS SHIT TO WORK
+    //IL ITERALLY TRIED EVERYTHING BUT THE AIMASSIST JUST KEEP GLITCHING U CAN MAKE PR OR I WILL JUS TRECODE IT LATER
+    //I WANT TO RELEASE IT ASAP SO DONT HATE OK OK OK?
+
+
+       pls trust
+
+     */
+
+
+
+
+
+
+
+
+
+
+
     public AimAssist() {
         super("AimAssist", "AimAssist", Category.Combat, 0);
         addProperties(range, fov, speed_yaw, aim_pitch, speed_pitch, thruwalls, block_break, weapon_only, aimlock);
@@ -184,22 +218,27 @@ public class AimAssist extends Module {
 //        return true;
 //    }
 
-
     private Entity getTarget() {
         Iterator<EntityPlayer> players = mc.theWorld.playerEntities.iterator();
-
         EntityPlayer target;
-        if(!players.hasNext())
-                return null;
-        target = players.next();
-        if(target == mc.thePlayer) return null;
-        if(target.isDead) return null;
-        if(this.thruwalls.getValue() && !this.mc.thePlayer.canEntityBeSeen(target)) return null;
-        if(target.isInvisible()) return null;
-        if(mc.thePlayer.isOnSameTeam(target)) return null;
-        if(target.getDistanceToEntity(mc.thePlayer) > range.getValue()) return null;
-        if(!isInFov(target, (float) fov.getValue().floatValue())) return null;
+        do {
+            do {
+                do {
+                    do {
+                        do {
+                            do {
+                                do {
+                                    if (!players.hasNext())
+                                        return null;
 
+                                    target = players.next();
+                                } while (target == mc.thePlayer);
+                            } while (target.isDead);
+                        } while (!this.thruwalls.getValue() && !this.mc.thePlayer.canEntityBeSeen(target));
+                    } while (target.isInvisible());
+                } while (mc.thePlayer.isOnSameTeam(target));
+            } while (target.getDistanceToEntity(mc.thePlayer) > range.getValue());
+        } while (!aimlock.getValue() && !isInFov(target, (float) fov.getValue().floatValue()));
         return target;
     }
 }

@@ -75,7 +75,7 @@ public class Hud extends Module {
         }
 
         if (clientInfoProperty.value) {
-            getFontRenderer().drawStringWithShadow(Blue.getInstance().version + " - DEVELOPMENT BUILD - " + Blue.getInstance().build, sr.getScaledWidth() - 3 - getFontRenderer().getWidth("1.2 - DEVELOPMENT - 62122"), potionY, -1);
+            getFontRenderer().drawStringWithShadow(Blue.getInstance().version + " - RELEASE - " + Blue.getInstance().build, sr.getScaledWidth() - 3 - getFontRenderer().getWidth("1.2 - DEVELOPMENT - 62122"), potionY, -1);
             potionY -= 11;
         }
 

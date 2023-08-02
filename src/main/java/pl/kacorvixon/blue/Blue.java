@@ -20,7 +20,7 @@ public class Blue {
     //Noslow
 
     private static Blue INSTANCE;
-    public final String client_name = "blue", version = "1.0", build = "080123";
+    public final String client_name = "blue", version = "1.0", build = "080323";
 
     public final ModuleAdministration moduleAdministration;
     public final CommandManager commandManager;
