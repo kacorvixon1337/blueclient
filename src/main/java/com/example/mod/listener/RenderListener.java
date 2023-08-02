@@ -1,10 +1,8 @@
 package com.example.mod.listener;
 
 import net.minecraft.client.Minecraft;
+import net.weavemc.loader.api.event.*;
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
-import net.weavemc.loader.api.event.RenderLivingEvent;
-import net.weavemc.loader.api.event.SubscribeEvent;
-import net.weavemc.loader.api.event.TickEvent;
 import pl.kacorvixon.blue.Blue;
 
 public class RenderListener {
@@ -39,7 +37,15 @@ public class RenderListener {
          }
       });
    }
-
+   @SubscribeEvent
+   public static void onPacketReceive(Event e) {
+      Blue.getInstance().moduleAdministration.moduleList.forEach(module -> {
+         if(module.enabled){
+            if(Minecraft.getMinecraft().theWorld != null)
+               module.onPacketReceive(e);
+         }
+      });
+   }
 
 
 

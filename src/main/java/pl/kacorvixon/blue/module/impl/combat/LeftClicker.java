@@ -13,12 +13,12 @@ import pl.kacorvixon.blue.module.Category;
 import pl.kacorvixon.blue.module.Module;
 import pl.kacorvixon.blue.property.impl.BooleanProperty;
 import pl.kacorvixon.blue.property.impl.NumberProperty;
+import pl.kacorvixon.blue.util.PlayerUtil;
 import pl.kacorvixon.blue.util.math.MathUtil;
+import pl.kacorvixon.blue.util.math.TimeUtil;
 import pl.kacorvixon.blue.util.math.TimerUtil;
 
 public class LeftClicker extends Module {
-
-
 
     private BooleanProperty left_click = new BooleanProperty("Left Clicker",true);
 
@@ -51,40 +51,41 @@ public class LeftClicker extends Module {
         addProperties(min_cps, max_cps, random, rand_min, rand_max, /*spike, spike_chance_up, drop_chance_down, spike_amount, drop_chance,*/block_check, weapon_check, hit_select);
     }
 
-    private TimerUtil timer = new TimerUtil();
-    private double leftDelay;
+    private TimeUtil timer = new TimeUtil();
 
     @Override
     public void onTick(net.weavemc.loader.api.event.TickEvent e){
         if(/*mc.gameSettings.keyBindAttack.isKeyDown()*/Mouse.isButtonDown(0)){
 
-            mc.gameSettings.keyBindAttack.pressed = false;
-
             if(block_check.getValue()){
                 BlockPos blockpos = this.mc.objectMouseOver.getBlockPos();
-                Block bruhnig = Minecraft.getMinecraft().theWorld.getBlockState(blockpos).getBlock();
-                if(bruhnig != Blocks.air || bruhnig != Blocks.water || bruhnig != Blocks.flowing_water || bruhnig != Blocks.lava || bruhnig != Blocks.flowing_lava)
-                    return;
+                if(blockpos != null) {
+                    Block bruhnig = Minecraft.getMinecraft().theWorld.getBlockState(blockpos).getBlock();
+                    if (bruhnig != Blocks.air || bruhnig != Blocks.water || bruhnig != Blocks.flowing_water || bruhnig != Blocks.lava || bruhnig != Blocks.flowing_lava)
+                        return;
+                }
             }
 
-            if(weapon_check.getValue() && !isHoldingWeapon())
+            if(weapon_check.getValue() && !PlayerUtil.isHoldingWeapon())
                 return;
 
-            if (timer.hasReached((long) leftDelay)) {
-                if (mc.currentScreen == null) {
-                    mc.clickMouse();
+            if(!hit_select.getValue()) {
+                int cps = (int) MathUtil.getRandom(min_cps.getValue(), max_cps.getValue());
+                int rand = random.getValue() ? (int) MathUtil.getRandom(rand_min.getValue(), rand_max.getValue()) : 0;
+                long del = 1000 / cps + rand;
+                if (timer.hasReached(del)) {
+                    PlayerUtil.sendLegitClick(0, true);
+                    timer.reset();
                 }
-                double cpsRange = Math.abs(max_cps.getValue() - min_cps.getValue());
-                leftDelay = (1 / (min_cps.getValue() + Math.random() * cpsRange)) * 1000;
-                timer.reset();
+            }else if (this.timer.cpsTimer(2, 3)) {//hit select skidded, and im too lazy to make it be REAL hitselect xd
+                KeyBinding.setKeyBindState(this.mc.gameSettings.keyBindAttack.getKeyCode(), true);
+                KeyBinding.onTick(this.mc.gameSettings.keyBindAttack.getKeyCode());
+                this.timer.reset();
             }
+
+
+
         }
-    }
-    public static boolean isHoldingWeapon() {
-        Item item = Minecraft.getMinecraft().thePlayer.getCurrentEquippedItem().getItem();
-        if(item instanceof ItemSword)
-            return true;
-        else return false;
     }
 }
 

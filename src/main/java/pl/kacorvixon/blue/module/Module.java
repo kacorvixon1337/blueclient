@@ -85,6 +85,9 @@ public class Module {
     public void onTick(net.weavemc.loader.api.event.TickEvent event) {
 
     }
+    public void onPacketReceive(net.weavemc.loader.api.event.Event event) {
+
+    }
 
 
 

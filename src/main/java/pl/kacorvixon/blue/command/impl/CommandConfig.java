@@ -1,5 +1,6 @@
 package pl.kacorvixon.blue.command.impl;
 
+import net.minecraft.util.EnumChatFormatting;
 import pl.kacorvixon.blue.Blue;
 import pl.kacorvixon.blue.command.Command;
 import pl.kacorvixon.blue.module.Module;
@@ -17,20 +18,21 @@ public class CommandConfig extends Command {
     @Override
     public void execute(String command, String[] args) {
         if (args.length < 2) {
-            Logger.logChat("Wrong Usage!");
+            Blue.getInstance().fileManager.saveConfig(new ClientConfig("default"));
+            Logger.logChat("Saved new config as " + EnumChatFormatting.GOLD + "default.json");
         } else {
             if (args.length > 2) {
                 ClientConfig clientConfig = new ClientConfig(args[2]);
                 if (args[1].equalsIgnoreCase("save")) {
                     Blue.getInstance().fileManager.saveConfig(clientConfig);
-                    Logger.logChat("saved " + args[2]);
+                    Logger.logChat("Saved " + args[2]);
                 }
                 if (args[1].equalsIgnoreCase("load") && clientConfig.getConfigFile().exists()) {
                     for (Module module : Blue.getInstance().moduleAdministration.moduleList) {
                         module.setEnabled(false);
                     }
                     Blue.getInstance().fileManager.loadConfig(clientConfig);
-                    Logger.logChat("loaded " + args[2]);
+                    Logger.logChat("Loaded " + args[2]);
                 }
             }
             if (args[1].equalsIgnoreCase("list")) {

@@ -19,7 +19,7 @@ public class TimerUtil {
     }
 
     public boolean hasReached(long time) {
-        return System.nanoTime() - this.lastMS > time;
+        return System.currentTimeMillis() - this.lastMS > time;
     }
 
     public long getTime() {

@@ -26,4 +26,13 @@ public abstract class MinecraftMixin {
         //EventBus.subscribe(new TickListener());
 
     }
+    @Inject(
+            method = {"shutdownMinecraftApplet"},
+            at = {@At("HEAD")}
+    )
+    public void shutdownMinecraftApplet(CallbackInfo ci) {
+
+        Blue.getInstance().stop();
+
+    }
 }

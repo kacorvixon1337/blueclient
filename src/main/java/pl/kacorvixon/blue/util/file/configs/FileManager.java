@@ -41,7 +41,7 @@ public class FileManager {
     }
 
     public void stop() {
-        saveConfig(new ClientConfig("modules"));
+        saveConfig(new ClientConfig("default"));
     }
 
     private ArrayList<ClientConfig> configList = new ArrayList<>();

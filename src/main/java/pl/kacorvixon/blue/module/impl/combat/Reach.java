@@ -20,7 +20,7 @@ import java.util.List;
 
 public class Reach extends Module {
 
-    public static NumberProperty range = new NumberProperty("Range",3,3,5,1);
+    public static NumberProperty range = new NumberProperty("Range",3,3,5,0.1);
 
     public Reach() {
         super("Reach", "Reach", Category.Combat, 0);
