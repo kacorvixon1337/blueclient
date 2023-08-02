@@ -25,7 +25,7 @@ public class Eagle extends Module {
     private BooleanProperty backwards_only = new BooleanProperty("Backwards only", false);
 
     public Eagle() {
-        super("Eagle", "Eagle", Category.Combat, 0);
+        super("Eagle", "Eagle", Category.Movement, 0);
         addProperties(delay, blocks_only, backwards_only);
     }
     private TimerUtil timer = new TimerUtil();

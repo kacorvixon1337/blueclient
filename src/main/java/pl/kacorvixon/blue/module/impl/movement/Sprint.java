@@ -7,7 +7,7 @@ import pl.kacorvixon.blue.util.log.Logger;
 
 public class Sprint extends Module {
     public Sprint() {
-        super("Sprint", "Sprint", Category.Combat, 0);
+        super("Sprint", "Sprint", Category.Movement, 0);
     }
 
     @Override
