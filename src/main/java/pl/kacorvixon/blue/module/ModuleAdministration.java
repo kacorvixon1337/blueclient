@@ -5,7 +5,6 @@ import pl.kacorvixon.blue.module.impl.combat.*;
 import pl.kacorvixon.blue.module.impl.misc.ChestStealer;
 import pl.kacorvixon.blue.module.impl.movement.Eagle;
 import pl.kacorvixon.blue.module.impl.movement.Sprint;
-import pl.kacorvixon.blue.module.impl.render.Chams;
 import pl.kacorvixon.blue.module.impl.render.ChestESP;
 import pl.kacorvixon.blue.module.impl.render.ESP;
 import pl.kacorvixon.blue.module.impl.render.Hud;
@@ -34,7 +33,6 @@ public final class ModuleAdministration {
         moduleList.add(new ChestStealer());
         moduleList.add(new Sprint());
         moduleList.add(new AimAssist());
-        moduleList.add(new Chams());
         //moduleList.add(new GlowESP()); shaders not possible cuz lunar is gay
     }
 
