@@ -1,8 +1,7 @@
 {
   "compatibilityLevel": "JAVA_8",
-  "package": "com.example.mod.mixins",
+  "package": "pl.kacorvixon.blue.mixins",
   "mixins": [
-    "MinecraftMixin",
     "MixinRendererLivingEntity",
     "MixinRenderPlayer",
     "EntityRendererMixin",

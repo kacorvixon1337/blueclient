@@ -1,4 +1,4 @@
-package com.example.mod.listener;
+package pl.kacorvixon.blue.listener;
 
 import net.weavemc.loader.api.event.RenderGameOverlayEvent;
 import net.weavemc.loader.api.event.SubscribeEvent;

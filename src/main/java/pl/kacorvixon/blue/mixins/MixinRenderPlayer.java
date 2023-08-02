@@ -1,4 +1,4 @@
-package com.example.mod.mixins;
+package pl.kacorvixon.blue.mixins;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;

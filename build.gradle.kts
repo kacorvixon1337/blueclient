@@ -6,7 +6,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-group = "com.example"
+group = "pl.kacorvixon.blue"
 version = "1.0"
 
 minecraft.version("1.8.9")

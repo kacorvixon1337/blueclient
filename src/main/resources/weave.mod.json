@@ -1,9 +1,9 @@
 {
   "mixinConfigs": [
-    "examplemod.mixins.json"
+    "blueclient.mixins.json"
   ],
   "entrypoints": [
-    "com.example.mod.ExampleMod"
+    "pl.kacorvixon.blue.Initializer"
   ],
   "hooks": [
     "com.example.mod.hook.MinecraftHook"

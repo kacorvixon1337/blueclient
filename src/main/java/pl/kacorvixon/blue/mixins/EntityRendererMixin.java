@@ -1,4 +1,4 @@
-package com.example.mod.mixins;
+package pl.kacorvixon.blue.mixins;
 
 import com.google.common.base.Predicates;
 import net.minecraft.client.Minecraft;
