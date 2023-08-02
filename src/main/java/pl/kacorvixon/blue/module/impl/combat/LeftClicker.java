@@ -69,7 +69,7 @@ public class LeftClicker extends Module {
             if(weapon_check.getValue() && !PlayerUtil.isHoldingWeapon())
                 return;
 
-            if(!hit_select.getValue()) {
+
                 int cps = (int) MathUtil.getRandom(min_cps.getValue(), max_cps.getValue());
                 int rand = random.getValue() ? (int) MathUtil.getRandom(rand_min.getValue(), rand_max.getValue()) : 0;
                 long del = 1000 / cps + rand;
@@ -77,14 +77,6 @@ public class LeftClicker extends Module {
                     PlayerUtil.sendLegitClick(0, true);
                     timer.reset();
                 }
-            }else if (this.timer.cpsTimer(2, 3)) {//hit select skidded, and im too lazy to make it be REAL hitselect xd
-                KeyBinding.setKeyBindState(this.mc.gameSettings.keyBindAttack.getKeyCode(), true);
-                KeyBinding.onTick(this.mc.gameSettings.keyBindAttack.getKeyCode());
-                this.timer.reset();
-            }
-
-
-
         }
     }
 }
