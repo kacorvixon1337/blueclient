@@ -4,8 +4,5 @@
   ],
   "entrypoints": [
     "pl.kacorvixon.blue.Initializer"
-  ],
-  "hooks": [
-    "com.example.mod.hook.MinecraftHook"
   ]
 }
