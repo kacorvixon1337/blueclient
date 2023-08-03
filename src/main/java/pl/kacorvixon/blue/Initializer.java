@@ -12,11 +12,11 @@ public class Initializer implements ModInitializer {
         EventBus.subscribe(KeyboardEvent.class, e -> {
             if(Keyboard.isKeyDown(Keyboard.KEY_INSERT)){
                 ClickGuiEdit.getInstance().display();
-            Blue.getInstance().moduleAdministration.moduleList.forEach(mod -> {
-                if (e.getKeyCode() == mod.keybind && e.getKeyState()) {
-                    mod.setEnabled(!mod.enabled);
-                }
-            });
-        };
-    });
-}}
+                Blue.getInstance().moduleAdministration.moduleList.forEach(mod -> {
+                    if (e.getKeyCode() == mod.keybind && e.getKeyState()) {
+                        mod.setEnabled(!mod.enabled);
+                    }
+                });
+            };
+        });
+    }}
