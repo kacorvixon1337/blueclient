@@ -1,7 +1,5 @@
-package com.example.mod.mixins;
+package pl.kacorvixon.blue.mixins;
 
-import com.example.mod.listener.RenderListener;
-import kotlin.OverloadResolutionByLambdaReturnType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.Minecraft;
@@ -11,14 +9,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ResourceLocation;
-import net.weavemc.loader.api.event.EventBus;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import pl.kacorvixon.blue.Blue;
 import pl.kacorvixon.blue.module.ModuleAdministration;
 import pl.kacorvixon.blue.module.impl.render.ChestESP;
 import pl.kacorvixon.blue.util.render.RenderUtil;

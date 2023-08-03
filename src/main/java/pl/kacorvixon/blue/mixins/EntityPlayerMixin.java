@@ -1,14 +1,12 @@
-package com.example.mod.mixins;
+package pl.kacorvixon.blue.mixins;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.potion.Potion;
 import net.minecraft.stats.AchievementList;
@@ -17,8 +15,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import pl.kacorvixon.blue.Blue;
 import pl.kacorvixon.blue.module.impl.combat.KeepSprint;
 
@@ -29,7 +25,7 @@ public abstract class EntityPlayerMixin {
     @Overwrite
     public void attackTargetEntityWithCurrentItem(Entity targetEntity) {
         if (targetEntity.canAttackWithItem()) {
-            if (!targetEntity.hitByEntity(Minecraft.theMinecraft.thePlayer)) {
+            if (!targetEntity.hitByEntity(Minecraft.getMinecraft().thePlayer)) {
                 float f = (float) Minecraft.getMinecraft().thePlayer.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
                 int i = 0;
                 float f1 = 0.0F;
