@@ -12,9 +12,7 @@ public class Sprint extends Module {
 
     @Override
     public void onTick(net.weavemc.loader.api.event.TickEvent event){
-
         mc.gameSettings.keyBindSprint.pressed = true;
-
     }
 }
 

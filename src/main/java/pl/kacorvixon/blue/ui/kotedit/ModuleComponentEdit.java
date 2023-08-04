@@ -6,6 +6,7 @@ import pl.kacorvixon.blue.module.impl.render.Hud;
 import pl.kacorvixon.blue.property.Property;
 import pl.kacorvixon.blue.property.impl.*;
 
+import pl.kacorvixon.blue.util.render.ColorUtil;
 import pl.kacorvixon.blue.util.render.RenderUtil;
 import pl.kacorvixon.blue.util.render.animation.Animation;
 import pl.kacorvixon.blue.util.render.animation.ColorAnimation;
@@ -63,7 +64,18 @@ public final class ModuleComponentEdit extends ExpandComponentEdit {
         int x = getX();
         int y = getY();
         colorAnimation.update();
-        colorAnimation.animate(module.enabled ? ModuleAdministration.getInstance(Hud.class).colorValue.value.getRGB() : new Color(45, 43, 43).getRGB(), 0.1);
+        colorAnimation.animate(
+                module.enabled ? ModuleAdministration.getInstance(Hud.class).colorEnumValue.value.equals(Hud.color.Rainbow) ?
+                        ColorUtil.createRainbowFromOffset(2400, 11 * 15) : ModuleAdministration.getInstance(Hud.class).colorValue.value.getRGB() : new Color(45, 43, 43).getRGB(), 0.1
+        );
+                //new Color(45, 43, 43).getRed(), 0.1);
+
+
+
+
+                /*
+                module.enabled ? ModuleAdministration.getInstance(Hud.class).colorValue.value.getRGB() :
+                        new Color(45, 43, 43).getRGB(), 0.1);*/
 
         if (expanded) {
             int childY = 15;

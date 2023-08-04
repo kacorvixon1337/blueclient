@@ -265,7 +265,7 @@ public class Hud extends Module {
         return (font.value) ? FontManager.getFont() : (RenderInterface) FontManager.getMinecraftFontRenderer();
     }
 
-    private enum color {
+    public enum color {
         Astolfo, Static, Rainbow, Fade
     }
 
