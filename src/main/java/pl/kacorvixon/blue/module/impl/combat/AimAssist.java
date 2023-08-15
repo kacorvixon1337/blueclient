@@ -218,7 +218,7 @@ public class AimAssist extends Module {
 //        return true;
 //    }
 
-    private Entity getTarget() {
+    public static Entity getTarget() {
         Iterator<EntityPlayer> players = mc.theWorld.playerEntities.iterator();
         EntityPlayer target;
         do {
@@ -234,7 +234,7 @@ public class AimAssist extends Module {
                                     target = players.next();
                                 } while (target == mc.thePlayer);
                             } while (target.isDead);
-                        } while (!this.thruwalls.getValue() && !this.mc.thePlayer.canEntityBeSeen(target));
+                        } while (!AimAssist.thruwalls.getValue() && !mc.thePlayer.canEntityBeSeen(target));
                     } while (target.isInvisible());
                 } while (mc.thePlayer.isOnSameTeam(target));
             } while (target.getDistanceToEntity(mc.thePlayer) > range.getValue());

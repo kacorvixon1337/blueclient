@@ -3,6 +3,7 @@ package pl.kacorvixon.blue.module.impl.combat;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSword;
@@ -44,8 +45,6 @@ public class LeftClicker extends Module {
     private BooleanProperty hit_select = new BooleanProperty("Hit select", false);
 
 
-
-
     public LeftClicker() {
         super("LeftClicker", "LeftClicker", Category.Combat, 0);
         addProperties(min_cps, max_cps, random, rand_min, rand_max, /*spike, spike_chance_up, drop_chance_down, spike_amount, drop_chance,*/block_check, weapon_check, hit_select);
@@ -69,6 +68,12 @@ public class LeftClicker extends Module {
             if(weapon_check.getValue() && !PlayerUtil.isHoldingWeapon())
                 return;
 
+
+                if(hit_select.getValue()){
+                    EntityPlayer player = (EntityPlayer) AimAssist.getTarget();
+                    if(player.hurtTime > 1)
+                        return;
+                }
 
                 int cps = (int) MathUtil.getRandom(min_cps.getValue(), max_cps.getValue());
                 int rand = random.getValue() ? (int) MathUtil.getRandom(rand_min.getValue(), rand_max.getValue()) : 0;

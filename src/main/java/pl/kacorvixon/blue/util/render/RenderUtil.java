@@ -5,6 +5,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.entity.Entity;
@@ -13,11 +14,16 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
+import pl.kacorvixon.blue.util.filter.image.GaussianFilter;
+
 import javax.vecmath.Vector3d;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
@@ -342,6 +348,62 @@ public class RenderUtil {
     }
     public static void bindTexture(int texture) {
         glBindTexture(GL_TEXTURE_2D, texture);
+    }
+    public static void renderShadow(double x, double y, double width, double height, int color, int blurRadius) {
+        renderShadow0(x, y, width, height, color, blurRadius);
+        GL11.glColor4f(1, 1, 1, 1);
+    }
+    public static Map<Integer, Integer> cache = new HashMap();
+    private static void renderShadow0(double x, double y, double width, double height, int color, int blurRadius) {
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
+        width += 10;
+        height += 10;
+        x -= blurRadius;
+        y -= blurRadius;
+        int identifier = (int) (width * height * blurRadius);
+        int texId = cache.getOrDefault(identifier, -1);
+        if (texId == -1) {
+            BufferedImage original = new BufferedImage((int) width, (int) height, 2);
+            Graphics g = original.getGraphics();
+            g.fillRect(blurRadius, blurRadius, (int) width - blurRadius * 2, (int) height - blurRadius * 2);
+            g.dispose();
+            BufferedImage blurred = new GaussianFilter((float) blurRadius).filter(original, null);
+            cache.put(identifier,
+                    texId = TextureUtil.uploadTextureImageAllocate(TextureUtil.glGenTextures(), blurred, true, false));
+        }
+        GlStateManager.bindTexture(texId);
+        GL11.glColor4f((color >> 16 & 0xFF) / 255F, (color >> 8 & 0xFF) / 255F, (color & 0xFF) / 255F,
+                (color >> 24 & 0xFF) / 255F);
+        GL11.glBegin(GL11.GL_QUADS);
+        GL11.glTexCoord2f(0.0f, 0.0f);
+        GL11.glVertex2d(x, y);
+        GL11.glTexCoord2f(0.0f, 1.0f);
+        GL11.glVertex2d(x, y + height);
+        GL11.glTexCoord2f(1.0f, 1.0f);
+        GL11.glVertex2d(x + width, y + height);
+        GL11.glTexCoord2f(1.0f, 0.0f);
+        GL11.glVertex2d(x + width, y);
+        GL11.glEnd();
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
+    }
+    public static void drawFrameBuffer(final ScaledResolution scaledResolution, final Framebuffer framebuffer) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, framebuffer.framebufferTexture);
+        glBegin(GL_QUADS);
+        {
+            glTexCoord2f(0, 1);
+            glVertex2i(0, 0);
+
+            glTexCoord2f(0, 0);
+            glVertex2i(0, scaledResolution.getScaledHeight());
+
+            glTexCoord2f(1, 0);
+            glVertex2i(scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
+
+            glTexCoord2f(1, 1);
+            glVertex2i(scaledResolution.getScaledWidth(), 0);
+        }
+        glEnd();
     }
     public enum RoundingMode {
         TOP_LEFT,

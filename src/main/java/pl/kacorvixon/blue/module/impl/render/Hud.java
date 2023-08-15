@@ -5,11 +5,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 import pl.kacorvixon.blue.Blue;
 import pl.kacorvixon.blue.font.FontManager;
 import pl.kacorvixon.blue.font.RenderInterface;
@@ -24,6 +26,9 @@ import pl.kacorvixon.blue.util.render.ColorUtil;
 import pl.kacorvixon.blue.util.render.RenderUtil;
 import pl.kacorvixon.blue.util.render.animation.Easings;
 import pl.kacorvixon.blue.util.render.animation.V2;
+import pl.kacorvixon.blue.util.shader.StencilUtil;
+import pl.kacorvixon.blue.util.shader.impl.BlurUtil;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -122,12 +127,47 @@ public class Hud extends Module {
                     } else getFontRenderer().drawStringWithShadow("B" + EnumChatFormatting.WHITE + "lue", 3, 3, colorr);
                     break;
                 case Rect:
-                    String text = "Blue | " + "kacorvixon | " + "blue.lol | " + "0001";
+                    if (ModuleAdministration.getInstance(Glow.class).enabled) {
+
+                        GlStateManager.pushMatrix();
+                        GlStateManager.translate(3, 3, 1);
+
+                        String serverip = mc.isSingleplayer() ? "localhost" : !mc.getCurrentServerData().serverIP.contains(":") ? mc.getCurrentServerData().serverIP + ":25565" : mc.getCurrentServerData().serverIP;
+                        String text = "Blue | " + mc.thePlayer.getName() + " | " + "blue.lol";
+                        GL11.glEnable(GL11.GL_ALPHA_TEST);
+                        GL11.glEnable(GL11.GL_BLEND);
+                        RenderUtil.renderShadow(4, 5, getFontRenderer().getWidth(text) + 8, 18, colorr, 7);
+                        int width = (int) getFontRenderer().getWidth(text) + 4;
+                        if (ModuleAdministration.getInstance(Shader.class).enabled) {
+                            StencilUtil.INSTANCE.initStencilToWrite();
+                            RenderUtil.drawRect(4, 5, width, 13, new Color(1, 1, 1, 120).getRGB(), true, 1);
+                            StencilUtil.INSTANCE.readStencilBuffer(1);
+                            BlurUtil.drawBlur2();
+                            StencilUtil.INSTANCE.uninitStencilBuffer();
+                        }
+                        RenderUtil.drawRect(4, 5, width, 13, new Color(1, 1, 1, 120).getRGB(), true, 1);
+                        RenderUtil.drawRect(4, 5, width, 1, colorr, true, 1);
+                        getFontRenderer().drawStringWithShadow(text, 6.5f, 8.5f, colorr);
+                        GL11.glDisable(GL11.GL_ALPHA_TEST);
+                        GL11.glDisable(GL11.GL_BLEND);
+                        GlStateManager.popMatrix();
+
+                    } else {
+                    String text = "Blue | " + mc.thePlayer.getName() + " | " + "blue.lol";
                     int width = (int) getFontRenderer().getWidth(text) + 3;
                     RenderUtil.drawRect(5, 5, width, 13, new Color(1, 1, 1, 120).getRGB(), true, 1);
                     RenderUtil.drawRect(5, 4, width, 1, colorr, true, 1);
                     getFontRenderer().drawStringWithShadow(text, 6, 8, -1);
                     Gui.drawRect(0, 0, 0, 0, 0);
+                    }
+
+
+
+
+
+
+
+
                     break;
             }
         }
